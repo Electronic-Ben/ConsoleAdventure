@@ -1,7 +1,5 @@
 #pragma once
 
-#include "engine/headers/Keyboard.h"
-#include "engine/headers/ProgressBar.h"
 #include "engine/headers/World.h"
 
 class Player
@@ -11,7 +9,6 @@ class Player
     char standing = ' ';
     int bumpX = 0;
     int bumpY = 0;
-    ProgressBar actionBar;
 
   private:
     int x = 0;
@@ -23,14 +20,12 @@ class Player
 
   public:
     Player(int X, int Y);
-    void update(const Keyboard &keyboard, World &world);
+    void update(const World &world, int dx, int dy);
     int getX() const;
     int getY() const;
     char getModel() const;
-    bool getMoved() const;
+    bool hasMoved() const;
 
   private:
-    void handleMovement(const Keyboard &keyboard, const World &world);
     bool move(int dx, int dy, const World &world);
-    void handleActions(const Keyboard &keyboard, World &world);
 };

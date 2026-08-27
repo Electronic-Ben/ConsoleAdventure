@@ -13,6 +13,7 @@ class Game
     Screen screen;
     Player player;
     Menu menu;
+    ProgressBar actionBar;
 
   public:
     void run();
@@ -26,4 +27,5 @@ class Game
   private:
     std::string getMap();
     void initMenus();
+    void handleActions();
 };
