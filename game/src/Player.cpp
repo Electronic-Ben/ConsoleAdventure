@@ -1,24 +1,19 @@
 #include "game/headers/Player.h"
 
+Player::Player(int X, int Y) : x(X), y(Y) {}
 
-Player::Player(int X, int Y)
-	: x(X), y(Y)
-{
-}
-
-
-void Player::update(const Keyboard& keyboard, World& world)
+void Player::update(const Keyboard &keyboard, World &world)
 {
     handleMovement(keyboard, world);
     handleActions(keyboard, world);
 }
 
-
-void Player::handleMovement(const Keyboard& keyboard, const World& world)
+void Player::handleMovement(const Keyboard &keyboard, const World &world)
 {
     bumped = ' ';
 
-    if (moveTimer > 0) moveTimer--;
+    if (moveTimer > 0)
+        moveTimer--;
 
     int dx = 0, dy = 0;
 
@@ -42,13 +37,17 @@ void Player::handleMovement(const Keyboard& keyboard, const World& world)
 
     dy = dx && dy ? 0 : dy;
 
-    if (moved) { 
-        moveTimer = moveCooldown; 
-        if (actionBar.active()) { actionBar.reset(); }
-    }
-    else 
+    if (moved)
     {
-        
+        moveTimer = moveCooldown;
+        if (actionBar.active())
+        {
+            actionBar.reset();
+        }
+    }
+    else
+    {
+
         bumpX = x + dx;
         bumpY = y + dy;
         bumped = world.getTile(x + dx, y + dy);
@@ -57,10 +56,12 @@ void Player::handleMovement(const Keyboard& keyboard, const World& world)
     standing = world.getTile(x, y);
 }
 
-
-void Player::handleActions(const Keyboard& keyboard, World& world)
+void Player::handleActions(const Keyboard &keyboard, World &world)
 {
-    if (actionBar.active() && moved) { actionBar.reset(); }
+    if (actionBar.active() && moved)
+    {
+        actionBar.reset();
+    }
 
     actionBar.tick();
 
@@ -74,18 +75,16 @@ void Player::handleActions(const Keyboard& keyboard, World& world)
         {
         case '%':
             actionBar.set(20, 100, "removing");
-            actionBar.setCallback([&world, targetX, targetY]() {
-                world.setTile(targetX, targetY, '_');
-                });
+            actionBar.setCallback([&world, targetX, targetY]() { world.setTile(targetX, targetY, '_'); });
             break;
         }
     }
 }
 
-
-bool Player::move(int dx, int dy, const World& world)
+bool Player::move(int dx, int dy, const World &world)
 {
-    if (dx == 0 && dy == 0) return false;
+    if (dx == 0 && dy == 0)
+        return false;
 
     bool horizFree = !world.impassable(world.getTile(x + dx, y));
     bool vertFree = !world.impassable(world.getTile(x, y + dy));
@@ -112,7 +111,6 @@ bool Player::move(int dx, int dy, const World& world)
 
     return false;
 }
-
 
 int Player::getX() const { return x; }
 

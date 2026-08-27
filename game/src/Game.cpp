@@ -3,51 +3,56 @@
 
 Game::Game() : screen(0, 0, 31, 9), player(50, 15) {}
 
-void Game::run() {
-  init();
+void Game::run()
+{
+    init();
 
-  while (running) {
-    keyboard.readInput();
-    update();
-    render();
+    while (running)
+    {
+        keyboard.readInput();
+        update();
+        render();
 
-    Sleep(30);
-  }
+        Sleep(30);
+    }
 
-  exit();
+    exit();
 }
 
-void Game::init() {
-  world.setMap(100, 30, getMap());
+void Game::init()
+{
+    world.setMap(100, 30, getMap());
 
-  screen.init();
+    screen.init();
 }
 
-void Game::update() {
-  player.update(keyboard, world);
+void Game::update()
+{
+    player.update(keyboard, world);
 
-  screen.moveTo(player.getX(), player.getY());
-  screen.update(world);
+    screen.moveTo(player.getX(), player.getY());
+    screen.update(world);
 }
 
-void Game::render() {
-  char activeTile = (player.bumped == ' ') ? player.standing : player.bumped;
+void Game::render()
+{
+    char activeTile = (player.bumped == ' ') ? player.standing : player.bumped;
 
-  screen.drawToTop(world.getDesc(activeTile) + world.getIntractTxt(activeTile) +
-                   '\n');
+    screen.drawToTop(world.getDesc(activeTile) + world.getIntractTxt(activeTile) + '\n');
 
-  screen.drawToBottom(world.getActions());
+    screen.drawToBottom(world.getActions());
 
-  screen.drawToBottom("\n " + player.actionBar.getDisplay());
+    screen.drawToBottom("\n " + player.actionBar.getDisplay());
 
-  screen.draw(player.getX(), player.getY(), player.getModel());
-  screen.render();
+    screen.draw(player.getX(), player.getY(), player.getModel());
+    screen.render();
 }
 
 void Game::exit() { screen.showCursor(); }
 
-std::string Game::getMap() {
-  std::string rawMap = R"(
+std::string Game::getMap()
+{
+    std::string rawMap = R"(
 ####################################################################################################
 #.,..,,.,,,.,.,...,,.,,,.,...,,.,,..,..,,.,,,...,.,.,,..,,.,,,.,,,.,...,.,~~..,,...,,.,..,.,,.,.,.,#
 #,,.,,,.,,...,.,..,,..,,.,,..,.,.,,....,..,..,.,,.,..,..,,..,.,.,,..,.,..~~~.,,..,..,.,..,..,.,,.,,#
@@ -79,8 +84,8 @@ std::string Game::getMap() {
 #..,,.,..,,...,,,..,,..,.,.,,.,.,..,..,,.,,..,..,,,..,.,..,..,..,~.,..,,.,,.,..,..,.,,.,.,,..,,.,,.#
 ####################################################################################################)";
 
-  // Erase newlines
-  std::erase(rawMap, '\n');
+    // Erase newlines
+    std::erase(rawMap, '\n');
 
-  return rawMap;
+    return rawMap;
 }

@@ -1,26 +1,21 @@
 #include "engine/headers/World.h"
 
+World::World() {}
 
-World::World()
-{
-}
-
-
-void World::setMap(int w, int h, const std::string& newMap)
+void World::setMap(int w, int h, const std::string &newMap)
 {
     width = w;
     height = h;
     map.assign(newMap.begin(), newMap.end());
 }
 
-
 char World::getTile(int x, int y) const
 {
     int index = toIndex(x, y);
-    if (x < 0 || x >= width || y < 0 || y >= height) return ' ';
+    if (x < 0 || x >= width || y < 0 || y >= height)
+        return ' ';
     return map[index];
 }
-
 
 void World::setTile(int x, int y, char newVal)
 {
@@ -30,7 +25,6 @@ void World::setTile(int x, int y, char newVal)
         changed = true;
     }
 }
-
 
 std::string World::getDesc(char tile)
 {
@@ -89,10 +83,9 @@ std::string World::getDesc(char tile)
         break;
     default:
         desc.append("???       ");
-    } 
+    }
     return desc;
 }
-
 
 std::string World::getIntractTxt(char tile)
 {
@@ -138,12 +131,7 @@ std::string World::getIntractTxt(char tile)
     return desc;
 }
 
-
-std::string World::getActions()
-{
-    return " B - Build     ";
-}
-
+std::string World::getActions() { return " B - Build     "; }
 
 bool World::impassable(char symbol) const
 {
@@ -161,27 +149,12 @@ bool World::impassable(char symbol) const
     }
 }
 
+bool World::hasChanged() const { return changed; }
 
-bool World::hasChanged() const
-{
-    return changed;
-}
-
-
-int World::toIndex(int x, int y) const
-{
-    return (y * width) + x;
-}
-
+int World::toIndex(int x, int y) const { return (y * width) + x; }
 
 Pos World::fromIndex(int index) const
 {
-    Pos pos = { index % width, index / width };
+    Pos pos = {index % width, index / width};
     return pos;
-}
-
-
-Pos::Pos(int X, int Y)
-    : x(X), y(Y)
-{
 }
