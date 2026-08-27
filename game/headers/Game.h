@@ -12,6 +12,7 @@ class Game
     World world;
     Screen screen;
     Player player;
+    Menu menu;
 
   public:
     void run();
@@ -24,4 +25,5 @@ class Game
 
   private:
     std::string getMap();
+    void initMenus();
 };

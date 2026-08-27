@@ -8,10 +8,14 @@
 
 struct menuOption
 {
+    std::string name;
     std::function<void()> callback;
-    std::string label;
+    bool avalible;
 
-    menuOption(std::function<void()> func, std::string name) : callback(std::move(func)), label(std::move(name)) {}
+    menuOption(std::string label, std::function<void()> func, bool isAvalible = true)
+        : name(std::move(label)), callback(std::move(func)), avalible(isAvalible)
+    {
+    }
 };
 
 class SelectMenu
@@ -31,7 +35,7 @@ class SelectMenu
     void moveSelection(int dx, int dy);
     void select();
     void update();
-    void addOption(std::function<void()> callback, std::string name);
+    void addOption(std::string name, std::function<void()> callback, bool isAvalible = true);
     void close();
     void open();
 
@@ -47,6 +51,7 @@ class Menu
     std::unordered_map<std::string, SelectMenu> menus;
 
   public:
+    Menu(int displayW);
     SelectMenu &addMenu(std::string name);
     SelectMenu *getMenu(std::string &name);
 };

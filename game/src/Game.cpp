@@ -1,7 +1,7 @@
 #include "game/headers/Game.h"
 #include <algorithm>
 
-Game::Game() : screen(0, 0, 31, 9), player(50, 15) {}
+Game::Game() : screen(0, 0, 31, 9), player(50, 15), menu(31) {}
 
 void Game::run()
 {
@@ -24,6 +24,7 @@ void Game::init()
     world.setMap(100, 30, getMap());
 
     screen.init();
+    initMenus();
 }
 
 void Game::update()
@@ -46,6 +47,19 @@ void Game::render()
 
     screen.draw(player.getX(), player.getY(), player.getModel());
     screen.render();
+}
+
+void Game::initMenus()
+{
+    auto &buildMenu = menu.addMenu("build");
+    buildMenu.addOption("Wall", []() { /*TODO*/ }, false);
+    buildMenu.addOption("Door", []() { /*TODO*/ }, false);
+    buildMenu.addOption("Bridge", []() { /*TODO*/ }, false);
+    buildMenu.addOption("Mine", []() { /*TODO*/ }, false);
+    buildMenu.addOption("Furnace", []() { /*TODO*/ }, false);
+    buildMenu.addOption("CraftingTable", []() { /*TODO*/ }, false);
+    buildMenu.addOption("Chest", []() { /*TODO*/ }, false);
+    buildMenu.addOption("Exit", [&buildMenu]() { buildMenu.close(); });
 }
 
 void Game::exit() { screen.showCursor(); }

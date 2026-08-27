@@ -79,6 +79,20 @@ void Player::handleActions(const Keyboard &keyboard, World &world)
             break;
         }
     }
+
+    if (keyboard.keyPressed(Key::B))
+    {
+        char targetTile = (bumped == ' ') ? standing : bumped;
+        int targetX = (bumped == ' ') ? x : bumpX;
+        int targetY = (bumped == ' ') ? y : bumpY;
+
+        // TODO: adjust menu options based on tile and inventory
+        // switch (targetTile)
+        // {
+        // case '%':
+
+        // }
+    }
 }
 
 bool Player::move(int dx, int dy, const World &world)
