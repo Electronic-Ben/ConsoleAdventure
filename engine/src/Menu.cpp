@@ -1,4 +1,4 @@
-#include "engine/headers/SelectMenu.h"
+#include "engine/headers/Menu.h"
 
 SelectMenu::SelectMenu(int displayW) : displayWidth(displayW) {}
 
@@ -32,6 +32,8 @@ void SelectMenu::moveSelection(int dx, int dy)
 void SelectMenu::close() { isOpen = false; }
 
 void SelectMenu::open() { isOpen = true; }
+
+Menu::Menu(int displayW) : displayWidth(displayW) {}
 
 SelectMenu &Menu::addMenu(std::string name)
 {

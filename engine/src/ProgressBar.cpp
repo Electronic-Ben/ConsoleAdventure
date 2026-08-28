@@ -2,19 +2,13 @@
 
 ProgressBar::ProgressBar() : ticks(0), length(0), txt("") {}
 
-ProgressBar::ProgressBar(int len, int endAfter, std::string barText)
-    : ticks(endAfter), start(endAfter), length(len), txt(std::move(barText))
-{
-}
-
-void ProgressBar::setCallback(std::function<void()> callback) { onEnd = std::move(callback); }
-
-void ProgressBar::set(int len, int endAfter, std::string barText)
+void ProgressBar::set(int len, int endAfter, std::string barText, std::function<void()> callback)
 {
     ticks = endAfter;
     start = endAfter;
     length = len;
     txt = std::move(barText);
+    onEnd = std::move(callback);
 }
 
 bool ProgressBar::tick()

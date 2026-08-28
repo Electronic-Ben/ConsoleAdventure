@@ -81,8 +81,7 @@ void Game::handleActions()
         switch (targetTile)
         {
         case '%':
-            actionBar.set(20, 100, "removing");
-            actionBar.setCallback([this, targetX, targetY]() { this->world.setTile(targetX, targetY, '_'); });
+            actionBar.set(20, 100, "removing", [this, targetX, targetY]() { world.setTile(targetX, targetY, '_'); });
             break;
         }
     }
