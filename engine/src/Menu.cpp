@@ -1,38 +1,5 @@
 #include "engine/headers/Menu.h"
 
-SelectMenu::SelectMenu(int displayW) : displayWidth(displayW) {}
-
-void SelectMenu::update() { display = toString(); }
-
-std::string SelectMenu::toString() { return "__MENU__"; }
-
-void SelectMenu::addOption(std::string name, std::function<void()> callback, bool isAvalible)
-{
-    options.emplace_back(std::move(name), std::move(callback), isAvalible);
-}
-
-std::string SelectMenu::getDisplay() { return display; }
-
-void SelectMenu::select()
-{
-    options.at(selection).callback();
-    close();
-}
-
-void SelectMenu::moveSelection(int dx, int dy)
-{
-    int di = dx + (dy * displayWidth);
-    if (selection + di < options.size())
-    {
-        selection += di;
-        update();
-    }
-}
-
-void SelectMenu::close() { isOpen = false; }
-
-void SelectMenu::open() { isOpen = true; }
-
 Menu::Menu(int displayW) : displayWidth(displayW) {}
 
 SelectMenu &Menu::addMenu(std::string name)
@@ -50,3 +17,19 @@ SelectMenu *Menu::getMenu(std::string &name)
     }
     return nullptr;
 }
+
+std::string Menu::toString()
+{
+    std::string str = "";
+
+    for (const auto &menu : menus)
+    {
+        if (menu.second.isOpen)
+        {
+            str += menu.second.getDisplay() + "\n";
+        }
+    }
+    return str;
+}
+
+std::string Menu::getDisplay() { return display; }

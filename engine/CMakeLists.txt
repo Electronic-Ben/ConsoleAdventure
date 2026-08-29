@@ -4,6 +4,7 @@ add_library(Engine STATIC
     src/ProgressBar.cpp
     src/Screen.cpp
     src/World.cpp
+    src/SelectMenu.cpp
 )
 
 # PUBLIC ensures any target linking Engine automatically gets the project root include directory
