@@ -32,7 +32,7 @@ void Game::init()
 void Game::update()
 {
     handleActions();
-
+    menu.update();
     screen.moveTo(player.getX(), player.getY());
     screen.update(world);
 }
@@ -45,7 +45,18 @@ void Game::render()
 
     screen.drawToBottom(world.getActions());
 
-    screen.drawToBottom("\n " + actionBar.getDisplay());
+    if (actionBar.active())
+    {
+        screen.drawToBottom("\n " + actionBar.getDisplay());
+    }
+
+    if (menu.isOpen)
+    {
+        screen.drawToBottom("\n" + menu.getDisplay());
+    }
+
+    if (!(actionBar.active() || menu.isOpen))
+        screen.drawToBottom("\n" + screen.blankLine);
 
     screen.draw(player.getX(), player.getY(), player.getModel());
     screen.render();
@@ -110,11 +121,8 @@ void Game::handleActions()
         int targetY = (player.bumped == ' ') ? player.getY() : player.bumpY;
 
         // TODO: adjust menu options based on tile and inventory
-        // switch (targetTile)
-        // {
-        // case '%':
 
-        // }
+        menu.openMenu(std::string("build"));
     }
 }
 

@@ -1,38 +1,5 @@
 #include "engine/headers/Menu.h"
 
-SelectMenu::SelectMenu(int displayW) : displayWidth(displayW) {}
-
-void SelectMenu::update() { display = toString(); }
-
-std::string SelectMenu::toString() { return "__MENU__"; }
-
-void SelectMenu::addOption(std::string name, std::function<void()> callback, bool isAvalible)
-{
-    options.emplace_back(std::move(name), std::move(callback), isAvalible);
-}
-
-std::string SelectMenu::getDisplay() { return display; }
-
-void SelectMenu::select()
-{
-    options.at(selection).callback();
-    close();
-}
-
-void SelectMenu::moveSelection(int dx, int dy)
-{
-    int di = dx + (dy * displayWidth);
-    if (selection + di < options.size())
-    {
-        selection += di;
-        update();
-    }
-}
-
-void SelectMenu::close() { isOpen = false; }
-
-void SelectMenu::open() { isOpen = true; }
-
 Menu::Menu(int displayW) : displayWidth(displayW) {}
 
 SelectMenu &Menu::addMenu(std::string name)
@@ -49,4 +16,62 @@ SelectMenu *Menu::getMenu(std::string &name)
         return &(it->second);
     }
     return nullptr;
+}
+
+std::string Menu::toString()
+{
+    std::string str = "";
+
+    for (const auto &pair : menus)
+    {
+        if (pair.second.isOpen)
+        {
+            str += pair.first + '\n' + pair.second.getDisplay();
+        }
+    }
+    return str;
+}
+
+bool Menu::anyOpen()
+{
+    for (auto const &pair : menus)
+    {
+        if (pair.second.isOpen)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+std::string Menu::getDisplay() { return display; }
+
+void Menu::update()
+{
+    for (auto &pair : menus)
+    {
+        pair.second.update();
+    }
+
+    isOpen = anyOpen();
+
+    display = toString();
+}
+
+void Menu::openMenu(std::string const &name)
+{
+    auto it = menus.find(name);
+    if (it != menus.end())
+    {
+        it->second.open();
+    }
+}
+
+void Menu::closeMenu(std::string const &name)
+{
+    auto it = menus.find(name);
+    if (it != menus.end())
+    {
+        it->second.close();
+    }
 }
