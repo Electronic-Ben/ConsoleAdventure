@@ -86,6 +86,8 @@ void Game::handleActions()
 
     KeyMap keyMap;
 
+    // TODO: disable other input if menu is open
+
     if (keyboard.keyDown(Key::W) || keyboard.keyDown(Key::Up))
         keyMap.up = true;
     if (keyboard.keyDown(Key::S) || keyboard.keyDown(Key::Down))
