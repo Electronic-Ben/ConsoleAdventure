@@ -8,7 +8,7 @@ void Screen::init()
     std::cout.flush();
 }
 
-Screen::Screen(int X, int Y, int W, int H) : x(X), y(Y), width(W), height(H)
+Screen::Screen(int X, int Y, int W, int H) : x(X), y(Y), width(W), height(H), blankLine(W, ' ')
 {
     // pre-allocate string (width + 1 is for \n)
     viewport.resize((width + 1) * height, ' ');

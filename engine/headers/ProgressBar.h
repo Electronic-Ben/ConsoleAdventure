@@ -21,8 +21,7 @@ class ProgressBar
     bool tick();
     bool active();
     void reset();
-    void setCallback(std::function<void()> callback);
-    void set(int len, int endAt, std::string barText);
+    void set(int len, int endAt, std::string barText, std::function<void()> callback);
     std::string getDisplay();
 
   private:

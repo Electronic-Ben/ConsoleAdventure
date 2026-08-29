@@ -45,7 +45,6 @@ class SelectMenu
 
 class Menu
 {
-  public:
   private:
     int displayWidth;
     std::unordered_map<std::string, SelectMenu> menus;
