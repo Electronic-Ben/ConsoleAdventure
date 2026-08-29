@@ -1,4 +1,5 @@
 #include "game/headers/Game.h"
+#include "engine/headers/Keyboard.h"
 #include <algorithm>
 #include <functional>
 
@@ -71,6 +72,22 @@ void Game::handleActions()
     }
 
     actionBar.tick();
+
+    KeyMap keyMap;
+
+    if (keyboard.keyDown(Key::W) || keyboard.keyDown(Key::Up))
+        keyMap.up = true;
+    if (keyboard.keyDown(Key::S) || keyboard.keyDown(Key::Down))
+        keyMap.down = true;
+    if (keyboard.keyDown(Key::A) || keyboard.keyDown(Key::Left))
+        keyMap.left = true;
+    if (keyboard.keyDown(Key::D) || keyboard.keyDown(Key::Right))
+        keyMap.right = true;
+
+    keyMap.waitX = !(keyboard.keyPressed(Key::A) || keyboard.keyPressed(Key::D));
+    keyMap.waitY = !(keyboard.keyPressed(Key::W) || keyboard.keyPressed(Key::S));
+
+    player.update(world, keyMap);
 
     if (keyboard.keyPressed(Key::N))
     {

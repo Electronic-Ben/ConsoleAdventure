@@ -2,16 +2,30 @@
 
 Player::Player(int X, int Y) : x(X), y(Y) {}
 
-void Player::update(const World &world, int dx, int dy)
+void Player::update(const World &world, KeyMap keyMap)
 {
+    int dx = 0, dy = 0;
+
+    if (keyMap.up)
+        dy--;
+    if (keyMap.down)
+        dy++;
+    if (keyMap.left)
+        dx--;
+    if (keyMap.right)
+        dx++;
+
     bumped = ' ';
 
     if (moveTimer > 0)
         moveTimer--;
 
-    moved = moveTimer <= 0 ? move(dx, dy, world) : false;
+    if (moveTimer > 0 && keyMap.waitX)
+        dx = 0;
+    if (moveTimer > 0 && keyMap.waitY)
+        dy = 0;
 
-    dy = dx && dy ? 0 : dy;
+    moved = move(dx, dy, world);
 
     if (moved)
     {

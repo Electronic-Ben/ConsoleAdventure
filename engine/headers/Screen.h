@@ -4,6 +4,9 @@
 
 class Screen
 {
+  public:
+    std::string blankLine;
+
   private:
     int x;
     int y;

@@ -2,6 +2,16 @@
 
 #include "engine/headers/World.h"
 
+struct KeyMap
+{
+    bool up = false;
+    bool down = false;
+    bool left = false;
+    bool right = false;
+    bool waitX = false;
+    bool waitY = false;
+};
+
 class Player
 {
   public:
@@ -20,7 +30,7 @@ class Player
 
   public:
     Player(int X, int Y);
-    void update(const World &world, int dx, int dy);
+    void update(const World &world, KeyMap keyMap);
     int getX() const;
     int getY() const;
     char getModel() const;
