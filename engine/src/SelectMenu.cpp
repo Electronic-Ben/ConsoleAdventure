@@ -7,7 +7,7 @@ void SelectMenu::update() { display = std::move(toString()); }
 std::string SelectMenu::toString()
 {
     std::string str = "";
-    str += std::string(displayWidth, '-') + "\n";
+    str += std::string(displayWidth, '-') + '\n';
 
     int currentLine = 0;
     int charsLeft = displayWidth;
@@ -19,7 +19,7 @@ std::string SelectMenu::toString()
         {
             if (opt.name.size() > charsLeft)
             {
-                str += "\n";
+                str += '\n';
                 currentLine++;
                 charsLeft = displayWidth;
             }
@@ -37,6 +37,9 @@ std::string SelectMenu::toString()
             index++;
         }
     }
+
+    str += '\n' + std::string(displayWidth, '-') + '\n';
+
     return str;
 }
 

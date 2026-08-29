@@ -8,6 +8,9 @@
 
 class Menu
 {
+  public:
+    bool isOpen = false;
+
   private:
     int displayWidth;
     std::unordered_map<std::string, SelectMenu> menus;
@@ -18,10 +21,11 @@ class Menu
     SelectMenu &addMenu(std::string name);
     SelectMenu *getMenu(std::string &name);
     std::string getDisplay();
-    void openMenu(std::string &name);
-    void closeMenu(std::string &name);
+    void openMenu(std::string const &name);
+    void closeMenu(std::string const &name);
     void update();
 
   private:
     std::string toString();
+    bool anyOpen();
 };

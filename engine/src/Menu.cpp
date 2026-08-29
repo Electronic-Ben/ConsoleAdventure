@@ -22,14 +22,56 @@ std::string Menu::toString()
 {
     std::string str = "";
 
-    for (const auto &menu : menus)
+    for (const auto &pair : menus)
     {
-        if (menu.second.isOpen)
+        if (pair.second.isOpen)
         {
-            str += menu.second.getDisplay() + "\n";
+            str += pair.first + '\n' + pair.second.getDisplay();
         }
     }
     return str;
 }
 
+bool Menu::anyOpen()
+{
+    for (auto const &pair : menus)
+    {
+        if (pair.second.isOpen)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 std::string Menu::getDisplay() { return display; }
+
+void Menu::update()
+{
+    for (auto &pair : menus)
+    {
+        pair.second.update();
+    }
+
+    isOpen = anyOpen();
+
+    display = toString();
+}
+
+void Menu::openMenu(std::string const &name)
+{
+    auto it = menus.find(name);
+    if (it != menus.end())
+    {
+        it->second.open();
+    }
+}
+
+void Menu::closeMenu(std::string const &name)
+{
+    auto it = menus.find(name);
+    if (it != menus.end())
+    {
+        it->second.close();
+    }
+}
