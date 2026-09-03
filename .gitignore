@@ -1,3 +1,4 @@
 build/
 .agents/
 .clang-format
+.vscode/
