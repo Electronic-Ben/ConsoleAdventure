@@ -8,8 +8,8 @@ struct KeyMap
     bool down = false;
     bool left = false;
     bool right = false;
-    bool waitX = false;
-    bool waitY = false;
+    bool waitX = true;
+    bool waitY = true;
 };
 
 class Player
