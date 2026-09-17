@@ -9,7 +9,7 @@ SelectMenu &Menu::addMenu(std::string name)
     return it->second;
 }
 
-SelectMenu *Menu::getMenu(std::string const &name)
+SelectMenu *Menu::getMenu(std::string &name)
 {
     auto it = menus.find(name);
     if (it != menus.end())
@@ -39,20 +39,10 @@ bool Menu::anyOpen()
     {
         if (pair.second.isOpen)
         {
-            activeMenu = pair.first;
             return true;
         }
     }
     return false;
-}
-
-void Menu::select()
-{
-    auto it = menus.find(activeMenu);
-    if (it != menus.end())
-    {
-        it->second.select();
-    }
 }
 
 std::string Menu::getDisplay() { return display; }
@@ -67,9 +57,6 @@ void Menu::update()
     isOpen = anyOpen();
 
     display = toString();
-
-    int count = std::count(display.begin(), display.end(), '\n');
-    lines = lines > count ? lines : count;
 }
 
 void Menu::openMenu(std::string const &name)

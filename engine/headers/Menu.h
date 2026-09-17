@@ -1,6 +1,5 @@
 #pragma once
 
-#include <algorithm>
 #include <string>
 #include <unordered_map>
 #include <utility>
@@ -11,8 +10,6 @@ class Menu
 {
   public:
     bool isOpen = false;
-    int lines = 0;
-    std::string activeMenu;
 
   private:
     int displayWidth;
@@ -22,14 +19,13 @@ class Menu
   public:
     Menu(int displayW);
     SelectMenu &addMenu(std::string name);
-    SelectMenu *getMenu(std::string const &name);
+    SelectMenu *getMenu(std::string &name);
     std::string getDisplay();
     void openMenu(std::string const &name);
     void closeMenu(std::string const &name);
     void update();
-    bool anyOpen();
-    void select();
 
   private:
     std::string toString();
+    bool anyOpen();
 };

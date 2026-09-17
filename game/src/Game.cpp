@@ -54,13 +54,9 @@ void Game::render()
     {
         screen.drawToBottom("\n" + menu.getDisplay());
     }
-    else
-    {
-        for (int i = 0; i < menu.lines; i++)
-        {
-            screen.drawToBottom("\n" + screen.blankLine);
-        }
-    }
+
+    if (!(actionBar.active() || menu.isOpen))
+        screen.drawToBottom("\n" + screen.blankLine);
 
     screen.draw(player.getX(), player.getY(), player.getModel());
     screen.render();
@@ -90,6 +86,8 @@ void Game::handleActions()
 
     KeyMap keyMap;
 
+    // TODO: disable other input if menu is open
+
     if (keyboard.keyDown(Key::W) || keyboard.keyDown(Key::Up))
         keyMap.up = true;
     if (keyboard.keyDown(Key::S) || keyboard.keyDown(Key::Down))
@@ -102,53 +100,27 @@ void Game::handleActions()
     keyMap.waitX = !(keyboard.keyPressed(Key::A) || keyboard.keyPressed(Key::D));
     keyMap.waitY = !(keyboard.keyPressed(Key::W) || keyboard.keyPressed(Key::S));
 
-    if (menu.isOpen)
-    {
-        player.update(world, KeyMap());
-    }
-    else
-    {
-        player.update(world, keyMap);
-    }
+    player.update(world, keyMap);
 
     if (keyboard.keyPressed(Key::N))
     {
-        if (menu.isOpen)
-        {
-            menu.select();
-        }
-        else
-        {
-            char targetTile = (player.bumped == ' ') ? player.standing : player.bumped;
-            int targetX = (player.bumped == ' ') ? player.getX() : player.bumpX;
-            int targetY = (player.bumped == ' ') ? player.getY() : player.bumpY;
+        char targetTile = (player.bumped == ' ') ? player.standing : player.bumped;
+        int targetX = (player.bumped == ' ') ? player.getX() : player.bumpX;
+        int targetY = (player.bumped == ' ') ? player.getY() : player.bumpY;
 
-            switch (targetTile)
-            {
-            case '%':
-                actionBar.set(20, 100, "removing",
-                              [this, targetX, targetY]() { world.setTile(targetX, targetY, '_'); });
-                break;
-            }
+        switch (targetTile)
+        {
+        case '%':
+            actionBar.set(20, 100, "removing", [this, targetX, targetY]() { world.setTile(targetX, targetY, '_'); });
+            break;
         }
     }
 
     if (keyboard.keyPressed(Key::B))
     {
-        auto buildMenu = menu.getMenu("build");
-        if (buildMenu != nullptr)
-        {
-            if (buildMenu->isOpen)
-            {
-                buildMenu->close();
-            }
-            else
-            {
-                char targetTile = (player.bumped == ' ') ? player.standing : player.bumped;
-                int targetX = (player.bumped == ' ') ? player.getX() : player.bumpX;
-                int targetY = (player.bumped == ' ') ? player.getY() : player.bumpY;
-            }
-        }
+        char targetTile = (player.bumped == ' ') ? player.standing : player.bumped;
+        int targetX = (player.bumped == ' ') ? player.getX() : player.bumpX;
+        int targetY = (player.bumped == ' ') ? player.getY() : player.bumpY;
 
         // TODO: adjust menu options based on tile and inventory
 
