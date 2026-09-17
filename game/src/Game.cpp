@@ -141,6 +141,7 @@ void Game::handleActions()
             if (buildMenu->isOpen)
             {
                 buildMenu->close();
+                return;
             }
             else
             {
