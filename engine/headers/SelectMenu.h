@@ -5,39 +5,44 @@
 #include <utility>
 #include <vector>
 
-struct menuOption
-{
-    std::string name;
-    std::function<void()> callback;
-    bool avalible;
+struct menuOption {
+  std::string name;
+  std::function<void()> callback;
+  bool avalible;
 
-    menuOption(std::string label, std::function<void()> func, bool isAvalible = true)
-        : name(std::move(label)), callback(std::move(func)), avalible(isAvalible)
-    {
-    }
+  menuOption(std::string label, std::function<void()> func,
+             bool isAvalible = true)
+      : name(std::move(label)), callback(std::move(func)),
+        avalible(isAvalible) {}
 };
 
-class SelectMenu
-{
-  public:
-    bool isOpen = false;
+class SelectMenu {
+public:
+  bool isOpen = false;
 
-  private:
-    std::vector<menuOption> options;
-    std::string display;
-    int displayWidth;
-    int selection = 0;
+private:
+  std::vector<menuOption> options;
+  std::string display;
+  int displayWidth;
+  int selection = 0;
+  std::vector<int> rowLengths;
 
-  public:
-    SelectMenu(int displayW);
-    std::string getDisplay() const;
-    void moveSelection(int dx, int dy);
-    void select();
-    void update();
-    void addOption(std::string name, std::function<void()> callback, bool isAvalible = true);
-    void close();
-    void open();
+public:
+  SelectMenu(int displayW);
+  std::string getDisplay() const;
+  void select();
+  void update();
+  void addOption(std::string name, std::function<void()> callback,
+                 bool isAvalible = true);
+  void close();
+  void open();
 
-  private:
-    std::string toString();
+  void moveDown();
+  void moveUp();
+  void moveLeft();
+  void moveRight();
+
+private:
+  std::string toString();
+  int getRow(int iindex);
 };
