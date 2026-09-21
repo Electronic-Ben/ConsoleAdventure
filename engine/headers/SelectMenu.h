@@ -25,7 +25,7 @@ private:
   std::string display;
   int displayWidth;
   int selection = 0;
-  std::vector<int> rowLengths;
+  std::vector<int> rowStarts;
 
 public:
   SelectMenu(int displayW);

@@ -72,10 +72,10 @@ void Menu::closeMenu(std::string const &name) {
   }
 }
 
-void Menu::moveUp() { menus[activeMenu].moveSelection(0, -1); }
+void Menu::moveUp() { menus[activeMenu].moveUp(); }
 
-void Menu::moveDown() { menus[activeMenu].moveSelection(0, 1); }
+void Menu::moveDown() { menus[activeMenu].moveDown(); }
 
-void Menu::moveLeft() { menus[activeMenu].moveSelection(-1, 0); }
+void Menu::moveLeft() { menus[activeMenu].moveLeft(); }
 
-void Menu::moveRight() { menus[activeMenu].moveSelection(1, 0); }
+void Menu::moveRight() { menus[activeMenu].moveRight(); }

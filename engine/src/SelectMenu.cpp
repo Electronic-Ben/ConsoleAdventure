@@ -8,7 +8,8 @@ std::string SelectMenu::toString() {
   std::string str = "";
   str += std::string(displayWidth, '-') + '\n';
 
-  rowLengths.clear();
+  rowStarts.clear();
+  rowStarts.push_back(0);
 
   int currentLine = 0;
   int charsLeft = displayWidth;
@@ -21,7 +22,7 @@ std::string SelectMenu::toString() {
         currentLine++;
         charsLeft = displayWidth;
 
-        rowLengths.push_back(index - 1);
+        rowStarts.push_back(index);
       }
 
       if (opt.avalible && index == selection) {
@@ -34,6 +35,7 @@ std::string SelectMenu::toString() {
       index++;
     }
   }
+  rowStarts.push_back(options.size());
 
   str += '\n' + std::string(displayWidth, '-') + '\n';
 
@@ -53,23 +55,63 @@ void SelectMenu::select() {
 }
 
 void SelectMenu::moveUp() {
-  if (selection <= 0)
-    return;
+  int row = getRow(selection);
+
+  if (row > 0) {
+    int col = selection - rowStarts[row];
+    int prevRowLen = rowStarts[row] - rowStarts[row - 1];
+
+    if (col >= prevRowLen) {
+      col = prevRowLen - 1;
+    }
+    selection = rowStarts[row - 1] + col;
+  }
 }
 
-void SelectMenu::moveDown() { selection++; }
+void SelectMenu::moveDown() {
+  int row = getRow(selection);
 
-void SelectMenu::moveLeft() { selection--; }
+  if (row < rowStarts.size() - 2) {
+    int col = selection - rowStarts[row];
+    int nextRowLen = rowStarts[row + 2] - rowStarts[row + 1];
 
-void SelectMenu::moveRight() { selection++; }
+    if (col >= nextRowLen) {
+      col = nextRowLen - 1;
+    }
+    selection = rowStarts[row + 1] + col;
+  }
+}
+
+void SelectMenu::moveLeft() {
+  int row = getRow(selection);
+  if (row < 0)
+    return;
+  if (selection > rowStarts.at(row)) {
+    selection--;
+  }
+}
+
+void SelectMenu::moveRight() {
+  int row = getRow(selection);
+  if (row < 0)
+    return;
+  if (selection < rowStarts.at(row + 1) - 1) {
+    selection++;
+  }
+}
 
 int SelectMenu::getRow(int index) {
-  for (int i = 0; i < rowLengths.size(); i++) {
-    if (rowLengths.at(i) >= index) {
-      return i;
+  if (rowStarts.empty()) {
+    return -1;
+  }
+
+  for (int i = 0; i < rowStarts.size() - 1; i++) {
+    if (rowStarts.at(i) > index) {
+      return i - 1;
     }
   }
-  return -1;
+
+  return rowStarts.size() - 1;
 }
 
 void SelectMenu::close() { isOpen = false; }

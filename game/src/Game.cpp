@@ -59,13 +59,13 @@ void Game::render() {
 
 void Game::initMenus() {
   auto &buildMenu = menu.addMenu("build");
-  buildMenu.addOption("Wall", []() { /*TODO*/ }, false);
-  buildMenu.addOption("Door", []() { /*TODO*/ }, false);
-  buildMenu.addOption("Bridge", []() { /*TODO*/ }, false);
-  buildMenu.addOption("Mine", []() { /*TODO*/ }, false);
-  buildMenu.addOption("Furnace", []() { /*TODO*/ }, false);
-  buildMenu.addOption("CraftingTable", []() { /*TODO*/ }, false);
-  buildMenu.addOption("Chest", []() { /*TODO*/ }, false);
+  buildMenu.addOption("Wall", []() { /*TODO*/ });
+  buildMenu.addOption("Door", []() { /*TODO*/ });
+  buildMenu.addOption("Bridge", []() { /*TODO*/ });
+  buildMenu.addOption("Mine", []() { /*TODO*/ });
+  buildMenu.addOption("Furnace", []() { /*TODO*/ });
+  buildMenu.addOption("CraftingTable", []() { /*TODO*/ });
+  buildMenu.addOption("Chest", []() { /*TODO*/ });
   buildMenu.addOption("Exit", [&buildMenu]() { buildMenu.close(); });
 }
 
