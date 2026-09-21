@@ -25,6 +25,7 @@ public:
   std::string getDisplay();
   void openMenu(std::string const &name);
   void closeMenu(std::string const &name);
+  SelectMenu *getActiveMenu();
   void update();
   bool anyOpen();
   void select();

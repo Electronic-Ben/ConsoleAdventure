@@ -95,6 +95,9 @@ void SelectMenu::moveRight() {
   int row = getRow(selection);
   if (row < 0)
     return;
+  if (selection >= options.size() - 1) {
+    return;
+  }
   if (selection < rowStarts.at(row + 1) - 1) {
     selection++;
   }

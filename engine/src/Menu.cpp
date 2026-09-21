@@ -36,11 +36,14 @@ bool Menu::anyOpen() {
   return false;
 }
 
-void Menu::select() {
+void Menu::select() { getActiveMenu()->select(); }
+
+SelectMenu *Menu::getActiveMenu() {
   auto it = menus.find(activeMenu);
   if (it != menus.end()) {
-    it->second.select();
+    return &(it->second);
   }
+  return nullptr;
 }
 
 std::string Menu::getDisplay() { return display; }
@@ -72,10 +75,10 @@ void Menu::closeMenu(std::string const &name) {
   }
 }
 
-void Menu::moveUp() { menus[activeMenu].moveUp(); }
+void Menu::moveUp() { getActiveMenu()->moveUp(); }
 
-void Menu::moveDown() { menus[activeMenu].moveDown(); }
+void Menu::moveDown() { getActiveMenu()->moveDown(); }
 
-void Menu::moveLeft() { menus[activeMenu].moveLeft(); }
+void Menu::moveLeft() { getActiveMenu()->moveLeft(); }
 
-void Menu::moveRight() { menus[activeMenu].moveRight(); }
+void Menu::moveRight() { getActiveMenu()->moveRight(); }
