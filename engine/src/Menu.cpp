@@ -2,89 +2,83 @@
 
 Menu::Menu(int displayW) : displayWidth(displayW) {}
 
-SelectMenu &Menu::addMenu(std::string name)
-{
-    auto [it, inserted] = menus.try_emplace(std::move(name), displayWidth);
-    return it->second;
+SelectMenu &Menu::addMenu(std::string name) {
+  auto [it, inserted] = menus.try_emplace(std::move(name), displayWidth);
+  return it->second;
 }
 
-SelectMenu *Menu::getMenu(std::string const &name)
-{
-    auto it = menus.find(name);
-    if (it != menus.end())
-    {
-        return &(it->second);
-    }
-    return nullptr;
+SelectMenu *Menu::getMenu(std::string const &name) {
+  auto it = menus.find(name);
+  if (it != menus.end()) {
+    return &(it->second);
+  }
+  return nullptr;
 }
 
-std::string Menu::toString()
-{
-    std::string str = "";
+std::string Menu::toString() {
+  std::string str = "";
 
-    for (const auto &pair : menus)
-    {
-        if (pair.second.isOpen)
-        {
-            str += pair.first + '\n' + pair.second.getDisplay();
-        }
+  for (const auto &pair : menus) {
+    if (pair.second.isOpen) {
+      str += pair.first + '\n' + pair.second.getDisplay();
     }
-    return str;
+  }
+  return str;
 }
 
-bool Menu::anyOpen()
-{
-    for (auto const &pair : menus)
-    {
-        if (pair.second.isOpen)
-        {
-            activeMenu = pair.first;
-            return true;
-        }
+bool Menu::anyOpen() {
+  for (auto const &pair : menus) {
+    if (pair.second.isOpen) {
+      activeMenu = pair.first;
+      return true;
     }
-    return false;
+  }
+  return false;
 }
 
-void Menu::select()
-{
-    auto it = menus.find(activeMenu);
-    if (it != menus.end())
-    {
-        it->second.select();
-    }
+void Menu::select() { getActiveMenu()->select(); }
+
+SelectMenu *Menu::getActiveMenu() {
+  auto it = menus.find(activeMenu);
+  if (it != menus.end()) {
+    return &(it->second);
+  }
+  return nullptr;
 }
 
 std::string Menu::getDisplay() { return display; }
 
-void Menu::update()
-{
-    for (auto &pair : menus)
-    {
-        pair.second.update();
-    }
+void Menu::update() {
+  for (auto &pair : menus) {
+    pair.second.update();
+  }
 
-    isOpen = anyOpen();
+  isOpen = anyOpen();
 
-    display = toString();
+  display = toString();
 
-    int count = std::count(display.begin(), display.end(), '\n');
-    lines = lines > count ? lines : count;
+  int count = std::count(display.begin(), display.end(), '\n');
+  lines = lines > count ? lines : count;
 }
 
-void Menu::openMenu(std::string const &name)
-{
-    auto it = menus.find(name);
-    if (it != menus.end())
-    {
-        it->second.open();
-    }
+void Menu::openMenu(std::string const &name) {
+  auto it = menus.find(name);
+  if (it != menus.end()) {
+    it->second.open();
+  }
 }
 
-void Menu::closeMenu(std::string const &name)
-{
-    auto it = menus.find(name);
-    if (it != menus.end())
-    {
-        it->second.close();
-    }
+void Menu::closeMenu(std::string const &name) {
+  auto it = menus.find(name);
+  if (it != menus.end()) {
+    it->second.close();
+  }
 }
+
+void Menu::moveUp() { getActiveMenu()->moveUp(); }
+
+void Menu::moveDown() { getActiveMenu()->moveDown(); }
+
+void Menu::moveLeft() { getActiveMenu()->moveLeft(); }
+
+void Menu::moveRight() { getActiveMenu()->moveRight(); }
