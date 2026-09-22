@@ -1,9 +1,10 @@
 #pragma once
 
+#include "engine/headers/ItemStack.h"
 #include <vector>
 
 class Container
 {
 private:
-  // std::vector<
+  std::vector<ItemStack> contents;
 };
