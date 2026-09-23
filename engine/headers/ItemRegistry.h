@@ -5,12 +5,12 @@
 
 class ItemRegistry {
 private:
-  static std::unordered_map<int, std::string> idToName;
-  static std::unordered_map<std::string, int> nameToId;
-  static int nextID;
+  static std::unordered_map<int, std::string> typeToName;
+  static std::unordered_map<std::string, int> nameToType;
+  static int nextType;
 
 public:
   static int registerItem(std::string name);
-  static std::string getItemName(int id);
-  static int getItemID(std::string name);
+  static std::string getTypeName(int type);
+  static int getItemType(std::string name);
 };

@@ -1,17 +1,17 @@
 #include "engine/headers/ItemRegistry.h"
 
-std::unordered_map<int, std::string> ItemRegistry::idToName;
-std::unordered_map<std::string, int> ItemRegistry::nameToId;
+std::unordered_map<int, std::string> ItemRegistry::typeToName;
+std::unordered_map<std::string, int> ItemRegistry::nameToType;
 
-int ItemRegistry::nextID = 0;
+int ItemRegistry::nextType = 0;
 
 int ItemRegistry::registerItem(std::string name) {
-  int id = nextID++;
-  idToName[id] = name;
-  nameToId[name] = id;
-  return id;
+  int type = nextType++;
+  typeToName[type] = name;
+  nameToType[name] = type;
+  return type;
 }
 
-std::string ItemRegistry::getItemName(int id) { return idToName[id]; }
+std::string ItemRegistry::getTypeName(int type) { return typeToName[type]; }
 
-int ItemRegistry::getItemID(std::string name) { return nameToId[name]; }
+int ItemRegistry::getItemType(std::string name) { return nameToType[name]; }

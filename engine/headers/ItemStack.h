@@ -1,20 +1,21 @@
 #pragma once
 
+#include "engine/headers/ItemRegistry.h"
 #include <string>
 #include <unordered_map>
 
-class ItemStack
-{
+class ItemStack {
 private:
-  static std::unordered_map<int, std::string> itemReg;
-
   std::string name;
-  int id;
-  int maxStack = 50;
-  int contents = 0;
+  int type;
+  int itemCount;
 
 public:
-  static int getItemID(std::string name);
-  static int getItemName(int itemId);
-  static void registerItem(std::string name);
+  ItemStack(std::string name, int count = 1);
+  int getType();
+  int getItemCount();
+  std::string getName();
+  void addItem(int count);
+  void removeItem(int count);
+  bool combineStacks(ItemStack &other);
 };
