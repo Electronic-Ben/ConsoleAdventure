@@ -1,6 +1,6 @@
 #include "engine/headers/Container.h"
 
-Container::Container(int capacity) : capacity(capacity) {}
+Container::Container(int dispW, int capacity) : displayWidth(dispW), capacity(capacity) {}
 
 void Container::update()
 {
@@ -113,7 +113,12 @@ std::string Container::toString()
       str += " " + item.getName() + " ";
     }
 
-    str += "  (" + std::to_string(item.getItemCount()) + ")";
+    int nameLen = item.getName().length() + 2;
+    int numLen = numLength(item.getItemCount()) + 2;
+    int numSpaces = displayWidth - nameLen - numLen;
+
+    str += std::string(numSpaces, ' ');
+    str += "(" + std::to_string(item.getItemCount()) + ")\n";
   }
 
   return str;

@@ -9,10 +9,11 @@ private:
   std::vector<ItemStack> contents;
   int capacity;
   std::string display;
+  int displayWidth;
   int selected = 0;
 
 public:
-  Container(int capacity);
+  Container(int dispW, int capacity);
 
   bool addItem(std::string name, int count = 1);
   bool removeItem(std::string name, int count = 1);
