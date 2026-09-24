@@ -3,10 +3,13 @@
 #include "engine/headers/ItemStack.h"
 #include <vector>
 
-class Container {
+class Container
+{
 private:
   std::vector<ItemStack> contents;
   int capacity;
+  std::string display;
+  int selected = 0;
 
 public:
   Container(int capacity);
@@ -18,4 +21,10 @@ public:
   int getFreeSlots();
   int getCapacity();
   void removeEmptyStacks();
+  std::string getDisplay();
+  void update();
+
+private:
+  std::string toString();
+  int numLength(int mun);
 };

@@ -8,3 +8,4 @@
 #include "engine/headers/Screen.h"
 #include "engine/headers/Container.h"
 #include "engine/headers/ItemStack.h"
+#include "engine/headers/ItemRegistry.h"

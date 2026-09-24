@@ -4,7 +4,8 @@
 #include <string>
 #include <unordered_map>
 
-class ItemStack {
+class ItemStack
+{
 private:
   std::string name;
   int type;
@@ -13,8 +14,8 @@ private:
 public:
   ItemStack(std::string name, int count = 1);
   int getType();
-  int getItemCount();
-  std::string getName();
+  int getItemCount() const;
+  std::string getName() const;
   void addItem(int count);
   void removeItem(int count);
   bool combineStacks(ItemStack &other);
