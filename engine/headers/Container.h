@@ -3,14 +3,14 @@
 #include "engine/headers/ItemStack.h"
 #include <vector>
 
-class Container
-{
+class Container {
 private:
   std::vector<ItemStack> contents;
   int capacity;
   std::string display;
   int displayWidth;
   int selected = 0;
+  bool isOpen = false;
 
 public:
   Container(int dispW, int capacity);
@@ -24,6 +24,9 @@ public:
   void removeEmptyStacks();
   std::string getDisplay();
   void update();
+  void open();
+  void close();
+  void toggle();
 
 private:
   std::string toString();

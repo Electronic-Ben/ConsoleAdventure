@@ -147,6 +147,10 @@ void Game::handleActions() {
 
     menu.openMenu(std::string("build"));
   }
+
+  if (keyboard.keyPressed(Key::M)) {
+    inventory.toggle();
+  }
 }
 
 void Game::exit() { screen.showCursor(); }
