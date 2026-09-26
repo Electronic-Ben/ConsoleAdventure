@@ -3,7 +3,8 @@
 #include <algorithm>
 #include <functional>
 
-Game::Game() : screen(0, 0, 31, 9), player(50, 15), menu(31) {}
+Game::Game()
+    : screen(0, 0, 31, 9), player(50, 15), menu(31), inventory(31, 10) {}
 
 void Game::run() {
   init();
