@@ -4,28 +4,29 @@
 
 class Screen
 {
-  public:
-    std::string blankLine;
+public:
+  std::string blankLine;
 
-  private:
-    int x;
-    int y;
-    int width;
-    int height;
-    std::string top;
-    std::string viewport;
-    std::string bottom;
+private:
+  int x;
+  int y;
+  int width;
+  int height;
+  std::string top;
+  std::string viewport;
+  std::string bottom;
 
-  public:
-    Screen(int X, int Y, int W, int H);
-    void init();
-    void update(const World &world);
-    void render();
-    int toIndex(int x, int y) const;
-    void hideCursor();
-    void showCursor();
-    void draw(int worldX, int worldY, char symbol);
-    void drawToTop(const std::string &str);
-    void drawToBottom(const std::string &str);
-    void moveTo(int X, int Y);
+public:
+  Screen(int X, int Y, int W, int H);
+  void init();
+  void update(const World &world);
+  void render();
+  int toIndex(int x, int y) const;
+  void hideCursor();
+  void showCursor();
+  void draw(int worldX, int worldY, char symbol);
+  void drawToTop(const std::string &str);
+  void drawToBottom(const std::string &str);
+  void moveTo(int X, int Y);
+  int getWidth();
 };

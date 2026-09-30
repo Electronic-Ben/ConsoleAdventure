@@ -2,12 +2,13 @@
 
 #include <algorithm>
 #include <string>
-#include <unordered_map>
+#include <map>
 #include <utility>
 
 #include "engine/headers/SelectMenu.h"
 
-class Menu {
+class Menu
+{
 public:
   bool isOpen = false;
   int lines = 0;
@@ -15,7 +16,7 @@ public:
 
 private:
   int displayWidth;
-  std::unordered_map<std::string, SelectMenu> menus;
+  std::map<std::string, SelectMenu> menus;
   std::string display;
 
 public:

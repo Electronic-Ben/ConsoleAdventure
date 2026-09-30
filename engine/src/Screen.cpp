@@ -71,3 +71,5 @@ int Screen::toIndex(int x, int y) const { return (y * (width + 1)) + x; }
 void Screen::hideCursor() { std::cout << "\x1B[?25l"; }
 
 void Screen::showCursor() { std::cout << "\x1B[?25h"; }
+
+int Screen::getWidth() { return width; }
