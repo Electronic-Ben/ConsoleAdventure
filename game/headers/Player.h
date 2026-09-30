@@ -1,41 +1,27 @@
 #pragma once
 
 #include "engine/headers/World.h"
-
-struct KeyMap
-{
-    bool up = false;
-    bool down = false;
-    bool left = false;
-    bool right = false;
-    bool waitX = true;
-    bool waitY = true;
-};
+#include "engine/headers/Container.h"
+#include "engine/headers/Equipment.h"
+#include "engine/headers/Tile.h"
 
 class Player
 {
-  public:
-    char bumped = ' ';
-    char standing = ' ';
-    int bumpX = 0;
-    int bumpY = 0;
+private:
+  Container inventory;
+  Equipment equipment;
+  Tile &bumped;
 
-  private:
-    int x = 0;
-    int y = 0;
-    char model = '@';
-    int moveCooldown = 3;
-    int moveTimer = 0;
-    bool moved = false;
+  int x = 0;
+  int y = 0;
 
-  public:
-    Player(int X, int Y);
-    void update(const World &world, KeyMap keyMap);
-    int getX() const;
-    int getY() const;
-    char getModel() const;
-    bool hasMoved() const;
+public:
+  Player(int X, int Y);
 
-  private:
-    bool move(int dx, int dy, const World &world);
+  void update();
+  int getX() const;
+  int getY() const;
+  bool move(int dx, int dy, const World &world);
+
+private:
 };

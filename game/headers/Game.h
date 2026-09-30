@@ -3,29 +3,30 @@
 #include "engine/headers/ConsoleEngine.h"
 #include "game/headers/ConsoleAdenture.h"
 
-class Game {
+class Game
+{
 private:
-  bool running = true;
-
-  Keyboard keyboard;
-  World world;
-  Screen screen;
+  Input input;
+  ActionHandler actionHandler;
   Player player;
-  Menu menu;
-  ProgressBar actionBar;
-  Container inventory;
+  World world;
+  UserInterface ui;
+  Renderer renderer;
+  Settings settings;
+  SaveManager saveManager;
+
+  bool shouldQuit = false;
 
 public:
+  Game();
+
   void run();
   void init();
   void update();
-  void render();
   void exit();
 
-  Game();
-
 private:
-  std::string getMap();
-  void initMenus();
-  void handleActions();
+  // std::string getMap();
+  // void initMenus();
+  // void handleActions();
 };
