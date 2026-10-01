@@ -15,4 +15,6 @@ private:
 
 public:
   void saveGame();
+  ChunkStoage getChunkStorage();
+  // load game for each peice
 };

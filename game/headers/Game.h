@@ -1,7 +1,7 @@
 #pragma once
 
 #include "engine/headers/ConsoleEngine.h"
-#include "game/headers/ConsoleAdenture.h"
+#include "game/headers/Player.h"
 
 class Game
 {
