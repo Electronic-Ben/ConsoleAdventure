@@ -1,27 +1,44 @@
 #pragma once
 
-#include <SDL/SDL.h>
 #include <array>
 
-#include "engine/headers/KeyState.h"
-#include "engine/headers/Keys.h"
-
-enum class KeyState : uint8_t
+enum Key
 {
+  W,
+  A,
+  S,
+  D,
   Up,
-  Held,
-  Pressed,
-  Released
+  Down,
+  Left,
+  Right,
+  B,
+  N,
+  M,
+
+  Count
+};
+
+struct Button
+{
+  bool down;
+  bool pressed;
+  bool released;
+
+  Button();
 };
 
 class Keyboard
 {
 private:
-  std::array<KeyState, Key::Count> keyStates;
+  std::array<Button, Key::Count> keys;
 
 public:
-  void update();
-  bool keyDown(int keyCode) const;
-  bool keyPressed(int keyCode) const;
-  bool keyReleased(int keyCode) const;
+  void readInput();
+  bool keyDown(Key key) const;
+  bool keyPressed(Key key) const;
+  bool keyReleased(Key key) const;
+
+private:
+  int mapToVK(int key);
 };

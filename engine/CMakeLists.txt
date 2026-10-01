@@ -12,4 +12,3 @@ add_library(Engine STATIC
 target_include_directories(Engine PUBLIC
     ${CMAKE_SOURCE_DIR}
 )
-
