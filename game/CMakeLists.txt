@@ -11,6 +11,4 @@ target_include_directories(ConsoleAdventure PRIVATE
 )
 
 # 3. Link against the engine library
-target_link_libraries(ConsoleAdventure PRIVATE
-    Engine
-)
+target_link_libraries(ConsoleAdventure PRIVATE engine)

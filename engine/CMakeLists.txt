@@ -1,4 +1,4 @@
-add_library(Engine STATIC
+add_library(engine STATIC
     src/Keyboard.cpp
     src/Menu.cpp
     src/ProgressBar.cpp
@@ -8,7 +8,9 @@ add_library(Engine STATIC
     src/Container.cpp
 )
 
-# PUBLIC ensures any target linking Engine automatically gets the project root include directory
-target_include_directories(Engine PUBLIC
-    ${CMAKE_SOURCE_DIR}
+# PUBLIC ensures any target linking engine automatically gets the project root include directory
+target_include_directories(engine PUBLIC 
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
+
+target_link_libraries(engine PUBLIC cpp-terminal)
