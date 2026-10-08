@@ -2,8 +2,8 @@
 
 #include <array>
 
-#include "cpp-terminal/terminal.hpp"
-#include "cpp-terminal/input.hpp"
+#include "extern/cpp-terminal/terminal.hpp"
+#include "extern/cpp-terminal/input.hpp"
 
 enum Key
 {

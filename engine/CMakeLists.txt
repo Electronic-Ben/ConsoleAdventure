@@ -1,10 +1,7 @@
 add_library(engine STATIC
     src/Keyboard.cpp
     src/Menu.cpp
-    src/ProgressBar.cpp
-    src/Screen.cpp
     src/World.cpp
-    src/SelectMenu.cpp
     src/Container.cpp
 )
 
