@@ -11,7 +11,6 @@ class Input
 {
 private:
   Keyboard keyboard;
-  Controller controller;
   WindowEvents windowEvents;
 
   std::unordered_map<Action, ActionState> actionStates;

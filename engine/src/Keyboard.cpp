@@ -1,54 +1,89 @@
 #include "engine/headers/Keyboard.h"
-#include <Windows.h>
 
-void Keyboard::readInput()
+Keyboard::Keyboard()
 {
-  for (int i = 0; i < Key::Count; i++)
+  for (Term::Key key : trackedKeys)
   {
-    Button &b = keys[i];
-    bool nowDown = (GetAsyncKeyState(mapToVK(i)) & 0x8000) != 0;
-
-    b.pressed = !b.down && nowDown;
-    b.released = b.down && !nowDown;
-    b.down = nowDown;
+    keyStates[key] = KeyState{}; // Initialize with default states
   }
 }
 
-bool Keyboard::keyDown(Key key) const { return keys[key].down; }
-
-bool Keyboard::keyPressed(Key key) const { return keys[key].pressed; }
-
-bool Keyboard::keyReleased(Key key) const { return keys[key].released; }
-
-int Keyboard::mapToVK(int key)
+Keyboard::~Keyboard()
 {
-  switch (key)
+  stop();
+}
+
+void Keyboard::start()
+{
+  running = true;
+  inputThread = std::thread(&Keyboard::inputLoop, this);
+}
+
+void Keyboard::stop()
+{
+  if (running)
   {
-  case Key::W:
-    return 'W';
-  case Key::A:
-    return 'A';
-  case Key::S:
-    return 'S';
-  case Key::D:
-    return 'D';
-  case Key::Up:
-    return VK_UP;
-  case Key::Down:
-    return VK_DOWN;
-  case Key::Left:
-    return VK_LEFT;
-  case Key::Right:
-    return VK_RIGHT;
-  case Key::B:
-    return 'B';
-  case Key::N:
-    return 'N';
-  case Key::M:
-    return 'M';
-  default:
-    return 0;
+    running = false;
+    if (inputThread.joinable())
+    {
+      inputThread.join();
+    }
   }
 }
 
-Button::Button() : down(false), pressed(false), released(false) {}
+void Keyboard::inputLoop()
+{
+  while (running)
+  {
+    Term::Event key = Term::read_event();
+
+    if (trackedKeys.count(key))
+    {
+      std::lock_guard<std::mutex> lock(mutex);
+
+      rawKeyState &state = rawStates[key];
+      state.down = true;
+      state.lastEventTime = std::chrono::steady_clock::now();
+    }
+  }
+}
+
+void Keyboard::update()
+{
+  std::lock_guard<std::mutex> lock(mutex);
+
+  auto now = std::chrono::steady_clock::now();
+
+  for (auto &[key, state] : keyStates)
+  {
+    bool isDownNow = state.down;
+
+    if (isDownNow)
+    {
+      auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - rawStates[key].lastEventTime);
+      if (elapsed > Keyboard::releaseTimeout)
+      {
+        isDownNow = false;
+      }
+    }
+
+    state.pressed = !state.down && isDownNow;
+    state.released = state.down && !isDownNow;
+    state.down = isDownNow;
+  }
+}
+
+bool Keyboard::isDown(Term::Key key) const
+{
+  return keyStates.at(key).down; // at() is safe, tracked keys are initialized
+}
+
+bool Keyboard::isPressed(Term::Key key) const
+{
+  return keyStates.at(key).pressed;
+}
+
+bool Keyboard::isReleased(Term::Key key) const
+{
+  return keyStates.at(key).released;
+}
